@@ -1,0 +1,385 @@
+----------------------------------------
+Start of SDES Utilities Testing
+
+Testing is_prime:
+is_prime(97) = True
+is_prime(479) = True
+is_prime(1044) = False
+is_prime(10554571) = True
+is_prime(0) = False
+is_prime(-17) = False
+
+Testing gcd:
+gcd(629,357) = 17
+gcd(440,700) = 20
+gcd(-30,700) = 10
+gcd(540,539) = 1
+gcd(711,0) = Error(SDES.gcd): invalid input
+gcd(0,311) = Error(SDES.gcd): invalid input
+gcd([9],27) = Error(SDES.gcd): invalid input
+
+Testing is_relatively_prime:
+is_relatively_prime(4,5) = True
+is_relatively_prime(540,539) = True
+is_relatively_prime(18,26) = False
+is_relatively_prime(0,26) = False
+is_relatively_prime([1],26) = Error(SDES.is_relatively_prime): invalid input
+
+Testing Blum Blum Shub: 
+SDES.BBS(383,503,8) = 01110011
+SDES.BBS(11,19,4) = 1110
+SDES.BBS(27691,11,16) = 1111110111000011
+SDES.BBS(383,503,0) = Error(SDES.BBS): invalid bits
+SDES.BBS(383,503.0,1) = Error(SDES.BBS): invalid q
+SDES.BBS(384,503,1) = Error(SDES.BBS): invalid p
+
+End of SDES Utilities Testing
+----------------------------------------
+
+----------------------------------------
+Start of SBOX class testing
+
+Testing SBOX1
+['101', '010', '001', '110', '011', '100', '111', '000']
+['001', '100', '110', '010', '000', '111', '101', '011']
+sbox1[1101] = 111
+sbox1[0010] = 001
+sbox1[0111] = 000
+sbox1[0000] = 101
+sbox1[010] = 
+sbox1[1010] = 
+
+Testing SBOX2
+['100', '000', '110', '101', '111', '001', '011', '010']
+['101', '011', '000', '111', '110', '010', '001', '100']
+sbox2[1101] = 010
+sbox2[0010] = 110
+sbox2[0111] = 010
+sbox2[0000] = 100
+sbox2[010] = 
+sbox2[1010] = 
+
+End of SBOX class Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES basics testing
+
+Testing default values (get_value):
+sdes.get_config_value(rounds) = 2
+sdes.get_config_value(key_length) = 9
+sdes.get_config_value(block_size) = 12
+sdes.get_config_value(encoding) = B6
+sdes.get_config_value(sbox1) = ['101', '010', '001', '110', '011', '100', '111', '000']
+['001', '100', '110', '010', '000', '111', '101', '011']
+sdes.get_config_value(sbox2) = ['100', '000', '110', '101', '111', '001', '011', '010']
+['101', '011', '000', '111', '110', '010', '001', '100']
+sdes.get_config_value(p) = 103
+sdes.get_config_value(q) = 199
+sdes.get_config_value(pad) = Q
+sdes.get_config_value(primes_file) = primes.txt
+sdes.get_config_value(size) = 
+
+Testing __str__:
+SDES Configuration:
+rounds = 2
+key_length = 9
+block_size = 12
+encoding = B6
+p = 103
+q = 199
+sbox1 = ['101', '010', '001', '110', '011', '100', '111', '000']
+['001', '100', '110', '010', '000', '111', '101', '011']
+sbox2 = ['100', '000', '110', '101', '111', '001', '011', '010']
+['101', '011', '000', '111', '110', '010', '001', '100']
+pad = Q
+primes_file = primes.txt
+
+Testing set_parameter:
+sdes.set_parameter(rounds,5) = True
+sdes.set_parameter(rounds,1) = False
+sdes.set_parameter(rounds,4.3) = False
+sdes.set_parameter(p,683) = True
+sdes.set_parameter(p,899) = False
+sdes.set_parameter(q,684) = False
+sdes.set_parameter(q,13.2) = False
+sdes.set_parameter(pad,r) = True
+sdes.set_parameter(pad,ab) = False
+sdes.set_parameter(pad,1) = False
+sdes.set_parameter(pad,?) = False
+sdes.set_parameter(encoding,B6) = False
+sdes.set_parameter(encoding,ascii) = False
+sdes.set_parameter(block_size,1024) = False
+sdes.set_parameter(block_size,243) = False
+sdes.set_parameter(block_size,512.0) = False
+sdes.set_parameter(key_length,64) = False
+sdes.set_parameter(sbox1,[]) = False
+sdes.set_parameter(primes_file,primes2.txt) = False
+
+Printing SDES object:
+SDES Configuration:
+rounds = 5
+key_length = 9
+block_size = 1024
+encoding = B6
+p = 683
+q = 199
+sbox1 = ['101', '010', '001', '110', '011', '100', '111', '000']
+['001', '100', '110', '010', '000', '111', '101', '011']
+sbox2 = ['100', '000', '110', '101', '111', '001', '011', '010']
+['101', '011', '000', '111', '110', '010', '001', '100']
+pad = r
+primes_file = primes.txt
+
+End of SDES basics Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES keys testing
+
+Testing get_key:
+p = 103, q = 199
+sdes.get_key() = 100011001
+p = 683, q = 199
+sdes.get_key() = 100011001
+p = 683, q = 503
+sdes.get_key() = 101111010
+
+Testing get_subkey:
+key = 101111010
+subkey(0) = 
+subkey(1) = 10111101
+subkey(2) = 01111010
+subkey(3) = 11110101
+subkey(4) = 11101010
+subkey(5) = 11010101
+subkey(6) = 10101011
+subkey(7) = 01010111
+subkey(8) = 10101111
+subkey(9) = 01011110
+subkey(10) = 10111101
+subkey(11) = 01111010
+
+End of SDES keys Testing
+----------------------------------------
+
+----------------------------------------
+Start of Feistel Network testing
+
+Testing expand:
+sdes.expand(011001) = 01010101
+sdes.expand(00001111) = 0001010111
+sdes.expand(0011) = 010101
+sdes.expand() = 
+sdes.expand(1011) = 
+
+Testing F function:
+F(111000,00011010) = 000001
+F(100110,01100101) = 000100
+F(10011,01100101) = 
+F(100110,0110010) = 
+F(100011,10111101) = 110001
+
+Testing feistel:
+feistel(011100100110,01100101) = 100110011000
+feistel(010001100101,11000001) = 100101101100
+feistel(01110010011,01100101) = 
+feistel(011100100110,0110010) = 
+
+End of Feistel Network Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES ECB Mode testing
+
+key = 111001101
+plaintext  = OK
+ciphertext = kX
+plaintext2 = OK
+
+key = 000100011
+plaintext  = Sit
+ciphertext = gGRR
+plaintext2 = Sit
+
+key = 111111011
+plaintext  = beet
+ciphertext = dv3e
+plaintext2 = beet
+
+key = 101111010
+plaintext  = welcome
+ciphertext = K3RFOg E
+plaintext2 = welcome
+
+key = 111100100
+plaintext  = "Cryptography" is power
+ciphertext = "3j8z9elJ6K52"5gbl8wwKzP
+plaintext2 = "Cryptography" is power
+
+key = 110010001
+plaintext  = go-go
+ciphertext = GD-GD
+plaintext2 = go-go
+
+End of SDES ECB Mode Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES CBC Mode testing
+
+key = 111001101
+plaintext  = go
+ciphertext = yE
+plaintext2 = go
+
+key = 110011101
+plaintext  = CAT
+ciphertext = XCpt
+plaintext2 = CAT
+
+key = 111111011
+plaintext  = seed
+ciphertext = go1g
+plaintext2 = seed
+
+key = 101111010
+plaintext  = go-go
+ciphertext = pT-s4
+plaintext2 = go-go
+
+key = 100101110
+plaintext  = cryptanalysis tricks
+ciphertext = 0CPt5fpLd8UvXuVZAeJk
+plaintext2 = cryptanalysis tricks
+
+End of SDES CBC Mode Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES OFB Mode testing
+
+key = 111001101
+plaintext  = go
+ciphertext = ya
+plaintext2 = go
+
+key = 110011101
+plaintext  = CAT
+ciphertext = O 9
+plaintext2 = CAT
+
+key = 111111011
+plaintext  = seed
+ciphertext = 46ge
+plaintext2 = seed
+
+key = 101111010
+plaintext  = go-go
+ciphertext = H4-vl
+plaintext2 = go-go
+
+key = 100101110
+plaintext  = cryptanalysis tricks
+ciphertext = iriNg9vTFiMMea 6Qcds
+plaintext2 = cryptanalysis tricks
+
+End of SDES OFB Mode Testing
+----------------------------------------
+
+----------------------------------------
+Start of SDES testing over files
+
+Encryption using ECB:
+plaintext:
+It was close upon four before the door opened, and a drunken looking
+ill kempt and side flashed with a swallowed face and
+disreputable clothes, walked into the room. Used as I was to my
+friend's splendid powers in the use of disguises, I had to look three
+times before I was certain that it was indeed he. With a nod he
+vanished into the bedroom, whence he emerged in six minutes
+tweed-suited and respectable, as old.
+
+ciphertext (ECB):
+vCJntLvryJl9pC7Ha2LMG4a0CLcIgnQugnRxcIfWMuHvy,1asy1F0CG0Hr6a2yJvQFIJ
+kzTQMTuYyjPoyukLkgnfktL2Dy1IHQujPukbBzThTKIByWDgnasS
+9INo8NSibt8gnX7wD2Dh,bbBCUKI6yuZ3sQugnug5K.Rrl9y1tLBQJntLrl3sQ1
+sNmzoy'hb2IQEoyLk3dhTfDhbFIrl2DpCl9fWaoaiE19jl9h,bNb9ly1ZNQNAqgYQuo8F
+fzN4Na0CLcIgnNbbBhbXw Bhja2QudF6yO1bBhbFI7JKIvbg.nYGQujPAoW8vb1
+2asIN2Dy1FIZNrl2Da0KIug5K,Jn2D09gn2DoK70D3KI6ya2Pc tFSITRuF
+FC3KI-lT5dKIjPoyMx4NMuuKhNQE,jPhbxQD.F
+
+Decryption using ECB:
+plaintext (ECB):
+It was close upon four before the door opened, and a drunken looking
+ill kempt and side flashed with a swallowed face and
+disreputable clothes, walked into the room. Used as I was to my
+friend's splendid powers in the use of disguises, I had to look three
+times before I was certain that it was indeed he. With a nod he
+vanished into the bedroom, whence he emerged in six minutes
+tweed-suited and respectable, as old.
+
+Encryption using CBC:
+plaintext:
+"Well, really!" he cried, and then he choked and laughed again until he
+was obliged to lie back, limp and helpless, in bed.
+"What is it?"
+"It's quite too funny. For sure you could never guess how I employed
+my morning, or what I ended by doing."
+"I can't imagine. I suppose that you have been watching the habits, and
+perhaps the house, of Miss Irene Adler."
+
+ciphertext (CBC):
+"B0V0,vTge Mo!"wghPHfIL ,2Y9cCJ rLRocOu4TDK3kcBpRkkyCRq8p0bqKbmYhclwZpe
+2tv0r5aVmT2zDfLlBl7bh20,ijP8xY0nrOO0T1FgKG,Xrc50BY.
+"bjr0 CZk6 ?"
+"zh'XEi8vGc7L0Eexl8w .zhDwn5SQacZWUmhuKBddT3NnVDKHCdN UDm3WtCbRXUrKU
+qgjt5JDhlM,CEj6ShsV5oAdjasXGcWeJJqfg."
+"w2ZbM'niQjku67U.TuE1AK6ZQB7loJC6nXDDKC F94lmjT8L67eJcnXicLFbOIApx,VKkP
+ iVpJ6pldJxGUgcS4,G3R7FW85v1TTmGb1apr2."
+
+Decryption using CBC:
+plaintext (CBC):
+"Well, really!" he cried, and then he choked and laughed again until he
+was obliged to lie back, limp and helpless, in bed.
+"What is it?"
+"It's quite too funny. For sure you could never guess how I employed
+my morning, or what I ended by doing."
+"I can't imagine. I suppose that you have been watching the habits, and
+perhaps the house, of Miss Irene Adler."
+
+Encryption using OFB:
+plaintext:
+"Quite so; but the sequel was rather unusual. I will tell you, however.
+I left the house little past nine o'clock this morning in the
+character as a lad of labor. There is great sympathy and
+unity among horsing gentlemen. Be one of them, and you will know all
+that there is to know. I soon found Briony Lodge. It is a _bijou_
+villa, with a garden in the back, but built out infront right up to
+the road, two stories. Chubb lock to the door. Large sitting-room on
+the right side, well furnished,
+
+ciphertext (OFB):
+"eRoQhAIC;3SJrvcpBd9TesNZJIVYvBHChplxJNpAIJS.UH2uzhzB6EG5Yi7n,JCz9gcsp.
+KfalD2BvtC52DfCpOHkfRJVhjbck6 eetw3'Y4wcYeBXj6gWEXdUgHzaOn83 
+M0VBAKkeoMWAnG JjVhveM7WKqR.rTxw3wqLO9fKydGt rJvEk JAo0S
+RXwaXqx4urELY SmU1wfX3KND8vcw.h1jao7mmBpi2u8L,FPbtuX3OS1eQH0Ou0NELeD
+COcmn3TGQKUs9GYSF0yOy.5OoE8QeLo8GLzAfqm1T5FwMNdE.dpUn0qvTL_CSvda_
+3L45b,Lh8AaV5E5DxhZIjRGEd3WYR3ht,asGyCLjxIMgNEW9vERjH9afTu 2Wzs03Dv
+vkSDcBCi,B5ACuCS5dywp.Hu3dUb4wO4A2d0 vYaKBpDr.3KsPqhgVExp 75-kQ1F1DV
+19BlyyId6u6EgO,ey3QFOHZDOa58sx,
+
+Decryption using OFB:
+plaintext (OFB):
+"Quite so; but the sequel was rather unusual. I will tell you, however.
+I left the house little past nine o'clock this morning in the
+character as a lad of labor. There is great sympathy and
+unity among horsing gentlemen. Be one of them, and you will know all
+that there is to know. I soon found Briony Lodge. It is a _bijou_
+villa, with a garden in the back, but built out infront right up to
+the road, two stories. Chubb lock to the door. Large sitting-room on
+the right side, well furnished,
+
+End of SDES testing over files
+----------------------------------------
+

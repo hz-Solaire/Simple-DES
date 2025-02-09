@@ -1,0 +1,20 @@
+@bandit.labs.overthewire.org -p2220
+
+you can just click right click to paste
+
+Note: passwords are hidden entirely (invisible)
+
+bandit0: bandit0
+
+bandit1: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If	ls cat then logout and log in b1
+
+bandit2: 263JGJPfgU6LtdEvgfWU1XP5yac29mFx	for files named or start with - (dashed filename), you have to cat with directory (cat ./-)
+
+bandit3: MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx	for files named with spaces in the file name, you have to use '', else the cat will distribute over the words (try to cat each word, for example: cat spaces in this filename cat: spaces: No such file or directory cat: in: No such file or directory cat: this: No such file or directory cat: filename: No such file or directory)
+
+bandit 4: 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ	for hidden files (files starting with .), use la or ls-a.
+
+bandit 5: 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw	to read what type of file we have, we use the 'file' command, we also use * to read all files, however, since all files start with -, we use the same technique as bandit 2: find ./* to find out all file types.
+
+bandit 6: HWasnPhtq9AVKe0dmk45nxy20cvUa6EG	find command: find -readable or -executable, -size [specify size](specify unit ex: c for bytes)
+
